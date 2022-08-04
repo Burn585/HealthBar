@@ -15,18 +15,11 @@ public class Health : MonoBehaviour
         _healthView = GetComponent<HealthView>();
     }
 
-    public void Healing()
+    public void Heal()
     {
         float heal = 10;
 
-        if (_value + heal > _maxValue) 
-        {
-            _value = _maxValue;
-        }
-        else
-        {
-            _value += heal;
-        }
+        _value = Mathf.Clamp(_value + heal, _minValue, _maxValue);
 
         _healthView.ChangeHealthValue(_value);
     }
@@ -35,14 +28,7 @@ public class Health : MonoBehaviour
     {
         float hit = 10;
 
-        if(_value - hit < _minValue)
-        {
-            _value = _minValue;
-        }
-        else
-        {
-            _value -= hit;
-        }
+        _value = Mathf.Clamp(_value - hit, _minValue, _maxValue);
 
         _healthView.ChangeHealthValue(_value);
     }
