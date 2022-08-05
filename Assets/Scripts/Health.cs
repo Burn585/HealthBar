@@ -3,29 +3,27 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private UnityEvent _changedHealth;
-    [SerializeField] private float _value;
-    [SerializeField] private float _maxValue;
-    [SerializeField] private float _minValue;
+    [SerializeField] private UnityEvent<float> _changedHealth;
+    public float Value { get; private set; }
+    public float MaxValue { get; private set; }
+    public float MinValue { get; private set; }
 
-    public void Heal()
+    public Health()
     {
-        float heal = 10;
-
-        _value = Mathf.Clamp(_value + heal, _minValue, _maxValue);
-        _changedHealth?.Invoke();
+        Value = 50;
+        MaxValue = 100;
+        MinValue = 0;
     }
 
-    public void Damage()
+    public void Heal(float heal)
     {
-        float hit = 10;
-
-        _value = Mathf.Clamp(_value - hit, _minValue, _maxValue);
-        _changedHealth?.Invoke();
+        Value = Mathf.Clamp(Value + heal, MinValue, MaxValue);
+        _changedHealth?.Invoke(Value);
     }
 
-    public float GetValue()
+    public void Damage(float hit)
     {
-        return _value;
+        Value = Mathf.Clamp(Value - hit, MinValue, MaxValue);
+        _changedHealth?.Invoke(Value);
     }
 }

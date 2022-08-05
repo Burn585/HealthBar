@@ -4,22 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-[RequireComponent(typeof(Health))]
 
 public class HealthView : MonoBehaviour
 {
-    private Health _health;
     private Slider _slider;
 
     private void Start()
     {
         _slider = GetComponent<Slider>();
-        _health = GetComponent<Health>();
     }
 
-    public void ChangeHealthValue()
+    public void ChangeHealthValue(float value)
     {
-        StartCoroutine(ChangeSliderValue(_slider, _health.GetValue()));
+        StartCoroutine(ChangeSliderValue(_slider, value));
     }
 
     private IEnumerator ChangeSliderValue(Slider slider, float value)
